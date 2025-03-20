@@ -2,43 +2,47 @@ namespace CW_2_s30599;
 
 public abstract class Kontener(
     char znacznikTypu,
+    uint maksLadownoscKg,
     uint masaTaraKg,
     uint masaNettoKg,
-    uint maksLadownoscKg,
     uint wysokoscCm,
-    uint glebokoscCm,
-    bool ladunekBezpieczny
+    uint glebokoscCm
 )
 {
     private static uint _ostatniIdentyfikator;
+    private uint _masaNettoKg = masaNettoKg;
+    
     public uint Identyfikator { get; } = ++_ostatniIdentyfikator;
     public char ZnacznikTypu { get; } = znacznikTypu;
-    // tara - masa kontenera
-    public uint MasaTaraKg { get; set; } = masaTaraKg;
-    // netto - masa ładunku
-    public uint MasaNettoKg { get; set; } = masaNettoKg;
     public uint MaksLadownoscKg { get; set; } = maksLadownoscKg;
+    // Masa tara to masa kontenera.
+    public uint MasaTaraKg { get; set; } = masaTaraKg;
+    // Masa netto to masa ładunku.
+    public uint MasaNettoKg
+    {
+        init => ZaladujKontener(value);
+        get => _masaNettoKg;
+    }
     public uint WysokoscCm { get; set; } = wysokoscCm;
     public uint GlebokoscCm { get; set; } = glebokoscCm;
-    public bool LadunekBezpieczny { get; set; } = ladunekBezpieczny;
 
-    public void OproznijLadunek()
+    public string NumerSeryjny()
     {
-        MasaNettoKg = 0;
+        return $"KON-{ZnacznikTypu}-{Identyfikator}";
+    }
+    
+    public virtual void OproznijLadunek()
+    {
+        _masaNettoKg = 0;
     }
 
-    public void ZaladujKontener(uint masaLadunkuKg)
+    public virtual void ZaladujKontener(uint masaLadunkuKg)
     {
         if (masaLadunkuKg > MaksLadownoscKg)
         {
             throw new OverfillException();
         }
         
-        MasaNettoKg = masaLadunkuKg;
-    }
-
-    public string NumerSeryjny()
-    {
-        return "KON-" + ZnacznikTypu + "-" + Identyfikator;
+        _masaNettoKg += masaLadunkuKg;
     }
 }
