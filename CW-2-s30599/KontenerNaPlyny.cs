@@ -15,7 +15,7 @@ public class KontenerNaPlynyKontener(
 ),
 IHazardNotifier
 {
-    public bool MaNiebezpiecznyLadunek { get; set; } = maNiebezpiecznyLadunek;
+    public bool MaNiebezpiecznyLadunek { get; } = maNiebezpiecznyLadunek;
 
     public override void ZaladujKontener(uint masaLadunkuKg)
     {
