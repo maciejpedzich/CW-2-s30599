@@ -1,6 +1,6 @@
 namespace CW_2_s30599;
 
-public class KontenerNaGazKontener(
+public class KontenerNaGaz(
     uint maksLadownoscKg,
     uint masaTaraKg,
     uint wysokoscCm,
