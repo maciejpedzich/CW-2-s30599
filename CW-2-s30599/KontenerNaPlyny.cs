@@ -4,14 +4,12 @@ public class KontenerNaPlynyKontener(
     bool maNiebezpiecznyLadunek,
     uint maksLadownoscKg,
     uint masaTaraKg,
-    uint masaNettoKg,
     uint wysokoscCm,
     uint glebokoscCm
 ) : Kontener(
     'L',
     maksLadownoscKg,
     masaTaraKg,
-    masaNettoKg,
     wysokoscCm,
     glebokoscCm
 ),
