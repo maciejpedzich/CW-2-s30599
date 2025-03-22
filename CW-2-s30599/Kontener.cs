@@ -12,7 +12,7 @@ public abstract class Kontener(
     
     public uint Identyfikator { get; } = ++_ostatniIdentyfikator;
     public char ZnacznikTypu { get; } = znacznikTypu;
-    public uint MaksLadownoscKg { get; set; } = maksLadownoscKg;
+    public uint MaksLadownoscKg { get; } = maksLadownoscKg;
     // Masa tara to masa kontenera.
     public uint MasaTaraKg { get; set; } = masaTaraKg;
     // Masa netto to masa ładunku.
@@ -25,7 +25,12 @@ public abstract class Kontener(
     {
         return $"KON-{ZnacznikTypu}-{Identyfikator}";
     }
-    
+
+    public uint MasaBruttoKg()
+    {
+        return MasaNettoKg + MasaTaraKg;
+    }
+
     public virtual void OproznijLadunek()
     {
         MasaNettoKg = 0;
@@ -33,7 +38,7 @@ public abstract class Kontener(
 
     public virtual void ZaladujKontener(uint masaLadunkuKg)
     {
-        if (masaLadunkuKg > MaksLadownoscKg)
+        if (MasaNettoKg + masaLadunkuKg > MaksLadownoscKg)
         {
             throw new OverfillException();
         }
