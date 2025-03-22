@@ -8,11 +8,11 @@ public class Statek(
 {
     private static uint _ostatniIdentyfikator;
 
-    public uint Identyfikator { get; } = ++_ostatniIdentyfikator;    
-    public List<Kontener> Kontenery { get; set; }
-    public uint MaksPredkoscWezly { get; set; } = maksPredkoscWezly;
-    public uint MaksLiczbaKontenerow { get; set; } = maksLiczbaKontenerow;
-    public uint MaksWagaKontenerowTony { get; set; } = maksWagaKontenerowTony;
+    public uint Identyfikator { get; } = ++_ostatniIdentyfikator;
+    public List<Kontener> Kontenery { get; set; } = new List<Kontener>();
+    public uint MaksPredkoscWezly { get; } = maksPredkoscWezly;
+    public uint MaksLiczbaKontenerow { get; } = maksLiczbaKontenerow;
+    public uint MaksWagaKontenerowTony { get; } = maksWagaKontenerowTony;
 
     public uint MaksWagaKontenerowKg()
     {
