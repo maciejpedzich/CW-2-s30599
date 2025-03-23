@@ -66,7 +66,52 @@ while (true)
             
             statki.Add(nowyStatek);
             Console.Clear();
-            Console.WriteLine("SUKCES: Kontenerowiec został dodany!");
+            Console.WriteLine("Kontenerowiec został dodany!");
+        }
+        else if (akcja == 2 && statki.Count > 0)
+        {
+            var idStatku = statki.Count == 1
+                ? statki[0].Identyfikator
+                : OdczytajLiczbeCalkowita<uint>(
+                    "Wprowadź numer statku do usunięcia"
+                );
+            var indeksStatku = statki.FindIndex(
+                s => s.Identyfikator == idStatku
+            );
+
+            if (indeksStatku == -1)
+            {
+                Console.Clear();
+                Console.Error.WriteLine("Błąd: statek o podanym numerze nie istnieje!");
+            }
+            else
+            {
+                var frazaPotwierdzenia = "POTWIERDZAM";
+
+                Console.WriteLine("Czy na pewno chcesz usunąć ten kontenerowiec?");
+                Console.Write(
+                    $"Wpisz {frazaPotwierdzenia}, aby potwierdzić lub cokolwiek innego, by anulować: "
+                );
+
+                var odpowiedz = Console.ReadLine();
+
+                if (odpowiedz == frazaPotwierdzenia)
+                {
+                    statki.RemoveAt(indeksStatku);
+                    Console.Clear();
+                    Console.WriteLine("Kontenerowiec został usunięty!");
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Anulowano usunięcie kontenerowca!");
+                }   
+            }
+        }
+        else
+        {
+            Console.Clear();
+            Console.Error.WriteLine("Błąd: nieprawidłowy numer akcji!");
         }
     }
     else
