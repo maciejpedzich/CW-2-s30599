@@ -1,6 +1,6 @@
 namespace CW_2_s30599;
 
-public class KontenerNaPlynyKontener(
+public class KontenerNaPlyny(
     bool maNiebezpiecznyLadunek,
     uint maksLadownoscKg,
     uint masaTaraKg,
@@ -17,7 +17,7 @@ IHazardNotifier
 {
     public bool MaNiebezpiecznyLadunek { get; } = maNiebezpiecznyLadunek;
 
-    public override void ZaladujKontener(uint masaLadunkuKg)
+    public override void ZaladujLadunek(uint masaLadunkuKg)
     {
         uint bezpiecznaPojemnosc = MaNiebezpiecznyLadunek
             ? masaLadunkuKg / 2
@@ -28,7 +28,7 @@ IHazardNotifier
             PowiadomONiebezpiecznejSytuacji();
         }
         
-        base.ZaladujKontener(masaLadunkuKg);
+        base.ZaladujLadunek(masaLadunkuKg);
     }
     
     public void PowiadomONiebezpiecznejSytuacji()

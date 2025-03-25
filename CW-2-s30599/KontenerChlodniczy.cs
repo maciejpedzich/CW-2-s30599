@@ -2,8 +2,8 @@ namespace CW_2_s30599;
 
 public class KontenerChlodniczy(
     string rodzajProduktu,
-    float minTemperaturaProduktu,
-    float temperaturaKontenera,
+    float minTempProduktuCelsjusz,
+    float tempKonteneraCelsjusz,
     uint maksLadownoscKg,
     uint masaTaraKg,
     uint wysokoscCm,
@@ -17,7 +17,7 @@ public class KontenerChlodniczy(
 )
 {
     public string RodzajProduktu { get; set; } = rodzajProduktu;
-    public float MinTemperaturaProduktu { get; set; } = minTemperaturaProduktu;
-    public float TemperaturaKontenera { get; set; }
-        = Math.Max(minTemperaturaProduktu, temperaturaKontenera);
+    public float MinTempProduktuCelsjusz { get; set; } = minTempProduktuCelsjusz;
+    public float TemperaturaKonteneraCelsjusz { get; set; }
+        = Math.Max(minTempProduktuCelsjusz, tempKonteneraCelsjusz);
 }

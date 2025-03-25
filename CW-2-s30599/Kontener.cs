@@ -14,7 +14,7 @@ public abstract class Kontener(
     public char ZnacznikTypu { get; } = znacznikTypu;
     public uint MaksLadownoscKg { get; } = maksLadownoscKg;
     // Masa tara to masa kontenera.
-    public uint MasaTaraKg { get; set; } = masaTaraKg;
+    public uint MasaTaraKg { get; } = masaTaraKg;
     // Masa netto to masa ładunku.
     public uint MasaNettoKg { get; protected set; }
     public uint WysokoscCm { get; set; } = wysokoscCm;
@@ -36,7 +36,7 @@ public abstract class Kontener(
         MasaNettoKg = 0;
     }
 
-    public virtual void ZaladujKontener(uint masaLadunkuKg)
+    public virtual void ZaladujLadunek(uint masaLadunkuKg)
     {
         if (MasaNettoKg + masaLadunkuKg > MaksLadownoscKg)
         {
@@ -44,5 +44,10 @@ public abstract class Kontener(
         }
         
         MasaNettoKg += masaLadunkuKg;
+    }
+
+    public override string ToString()
+    {
+        return $"Kontener {NumerSeryjny()} (maksLadownoscKg={MaksLadownoscKg}, masaTaraKg={MasaTaraKg}, masaNettoKg={MasaNettoKg}, wysokoscCm={WysokoscCm}, glebokoscCm={GlebokoscCm})";
     }
 }

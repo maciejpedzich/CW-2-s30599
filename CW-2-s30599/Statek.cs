@@ -9,18 +9,36 @@ public class Statek(
     private static uint _ostatniIdentyfikator;
 
     public uint Identyfikator { get; } = ++_ostatniIdentyfikator;
-    public List<Kontener> Kontenery { get; set; } = new List<Kontener>();
+    public List<Kontener> Kontenery { get; } = new List<Kontener>();
     public uint MaksPredkoscWezly { get; } = maksPredkoscWezly;
     public uint MaksLiczbaKontenerow { get; } = maksLiczbaKontenerow;
     public uint MaksWagaKontenerowTony { get; } = maksWagaKontenerowTony;
 
-    public uint MaksWagaKontenerowKg()
+    public void ZaladujKontener(Kontener kontener)
+    {
+        Kontenery.Add(kontener);
+    }
+    
+    public uint MaksWagaBruttoKontenerowKg()
     {
         return MaksWagaKontenerowTony * 1000;
     }
 
+    public uint WagaBruttoKontenerowKg()
+    {
+        return Kontenery.Aggregate(
+            (uint) 0,
+            (waga, kontener) =>
+            {
+                waga += kontener.MasaBruttoKg();
+                return waga;
+            });
+    }
+
     public override string ToString()
     {
-        return $"Statek {Identyfikator} (speed={MaksPredkoscWezly}, maxContainerNum={MaksLiczbaKontenerow}, maxWeight={MaksWagaKontenerowKg()})";
+        var listaKontenerow = String.Join("\n", Kontenery.Select((kontener) => $"\t- {kontener}"));
+        
+        return $"Statek {Identyfikator} (maksPredkoscWezly={MaksPredkoscWezly}, maksLiczbaKontenerow={MaksLiczbaKontenerow}, maksWagaBruttoKontenerowKg={MaksWagaBruttoKontenerowKg()})\n{listaKontenerow}";
     }
 }
