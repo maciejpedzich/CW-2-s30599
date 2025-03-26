@@ -9,22 +9,22 @@ namespace CW_2_s30599;
 
 class Program
 {
-    static List<Statek> statki = new List<Statek>();
-    static List<Kontener> kontenery = new List<Kontener>();
+    static List<Statek> _statki = new List<Statek>();
+    static List<Kontener> _kontenery = new List<Kontener>();
     
-    static void Main(string[] args)
+    static void Main(string[] _)
     {
         while (true)
         {
-            var saJakiesStatki = statki.Count > 0;
-            var saWolneKontenery = kontenery.Count > 0;
-            var saZaladowaneStatki = statki.Any(s => s.Kontenery.Count > 0);
+            var saJakiesStatki = _statki.Count > 0;
+            var saWolneKontenery = _kontenery.Count > 0;
+            var saZaladowaneStatki = _statki.Any(s => s.Kontenery.Count > 0);
             
             Console.WriteLine();
             Console.WriteLine("Lista kontenerowców:");
 
             if (saJakiesStatki)
-                foreach (var statek in statki) Console.WriteLine(statek);
+                foreach (var statek in _statki) Console.WriteLine(statek);
             else
                 Console.WriteLine("Brak");
             
@@ -32,7 +32,7 @@ class Program
             Console.WriteLine("Lista wolnych kontenerów:");
 
             if (saWolneKontenery)
-                foreach (var kontener in kontenery) Console.WriteLine(kontener);
+                foreach (var kontener in _kontenery) Console.WriteLine(kontener);
             else
                 Console.WriteLine("Brak");
             
@@ -58,7 +58,7 @@ class Program
                 {
                     Console.WriteLine("8. Usuń kontener ze statku");
 
-                    if (statki.Count > 1)
+                    if (_statki.Count > 1)
                         Console.WriteLine("9. Przenieś kontener między statkami");
                 }
             }
@@ -88,17 +88,17 @@ class Program
                     maksWagaKontenerowTony
                 );
                 
-                statki.Add(nowyStatek);
+                _statki.Add(nowyStatek);
                 WypiszSukces("kontenerowiec został dodany");
             }
             else if (akcja == 2 && saJakiesStatki) AkcjaWymagajacaWyboruStatku(
-                statki,
+                _statki,
                 s => 
                 {
                     Console.WriteLine("Czy na pewno chcesz usunąć ten kontenerowiec?");
                     AkcjaWymagajacaZatwierdzenia(() =>
                     {
-                        statki.Remove(s);
+                        _statki.Remove(s);
                         WypiszSukces("kontenerowiec został usunięty");
                     });
                 }
@@ -180,16 +180,16 @@ class Program
                         );
                     }
 
-                    kontenery.Add(kontener);
+                    _kontenery.Add(kontener);
                     WypiszSukces("pomyślnie dodano kontener");
                 }
                 else WypiszBlad("nieprawidłowy typ kontenera");
             }
             else if (akcja == 4 && saWolneKontenery) AkcjaWymagajacaWyboruKontenera(
-                kontenery,
+                _kontenery,
                 k =>
                 {
-                    var dozwoloneStatki = statki.Where(
+                    var dozwoloneStatki = _statki.Where(
                             s =>
                             {
                                 var nowaMasaBruttoKg =
@@ -231,14 +231,14 @@ class Program
                         var statek = dozwoloneStatki[indeksStatku];
 
                         statek.ZaladujKontener(k);
-                        kontenery.Remove(k);
+                        _kontenery.Remove(k);
                         WypiszSukces("pomyślnie przeniesiono kontener na statek");
                     }
                     else WypiszBlad("nie ma statku zdolnego pomieścić ten kontener");
                 }
             );
             else if (akcja == 5 && saWolneKontenery) AkcjaWymagajacaWyboruKontenera(
-                kontenery,
+                _kontenery,
                 k =>
                 {
                     var masaLadunkuKg = OdczytajLiczbe<uint>(
@@ -256,7 +256,7 @@ class Program
                 }
             );
             else if (akcja == 6 && saWolneKontenery) AkcjaWymagajacaWyboruKontenera(
-                kontenery,
+                _kontenery,
                 k =>
                 {
                     k.OproznijLadunek();
@@ -264,18 +264,18 @@ class Program
                 }
             );
             else if (akcja == 7 && saWolneKontenery) AkcjaWymagajacaWyboruKontenera(
-                kontenery,
+                _kontenery,
                 k =>
                 {
                     AkcjaWymagajacaZatwierdzenia(() =>
                     {
-                        kontenery.Remove(k);
+                        _kontenery.Remove(k);
                         WypiszSukces("pomyślnie usunięto kontener");
                     });
                 }
             );
             else if (akcja == 8 && saZaladowaneStatki) AkcjaWymagajacaWyboruStatku(
-                statki,
+                _statki,
                 s =>
                 {
                     AkcjaWymagajacaWyboruKontenera(
@@ -291,15 +291,15 @@ class Program
                     );
                 }
             );
-            else if (akcja == 9 && saZaladowaneStatki && statki.Count > 1) AkcjaWymagajacaWyboruStatku(
-                statki,
+            else if (akcja == 9 && saZaladowaneStatki && _statki.Count > 1) AkcjaWymagajacaWyboruStatku(
+                _statki,
                 s1 =>
                 {
                     AkcjaWymagajacaWyboruKontenera(
                         s1.Kontenery,
                         k =>
                         {
-                            var statkiZdolnePomiescicKontener = statki
+                            var statkiZdolnePomiescicKontener = _statki
                                 .Where(s2 =>
                                 {
                                     var rozneStatki =
